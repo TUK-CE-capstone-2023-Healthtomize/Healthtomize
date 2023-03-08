@@ -5,7 +5,7 @@
 트레이너에게 PT를 받는 것처럼 AI를 통해 운동 자세를 교정해주고 식단을 관리해주는 애플리케이션
 
 # 시스템 아키텍처
-![image](https://user-images.githubusercontent.com/121246589/223614618-46e783a3-e67d-4ab7-8a7c-ca69c21afe4f.png)
+![image](https://user-images.githubusercontent.com/121246589/223705922-304c0622-15f2-4449-80ac-418975607e80.png)
 
 # Tools
 
