@@ -1,17 +1,15 @@
 # Healthtomize
----
-# 딥러닝 기반의 운동 및 식단 관리 시스템
----
+
+## 딥러닝 기반의 운동 및 식단 관리 시스템
 ## "내 손 안의 트레이너" 
 트레이너에게 PT를 받는 것처럼 AI를 통해 운동 자세를 교정해주고 식단을 관리해주는 애플리케이션
+
 # 시스템 아키텍처
----
 ![image](https://user-images.githubusercontent.com/121246589/223614618-46e783a3-e67d-4ab7-8a7c-ca69c21afe4f.png)
+
 # Tools
----
-<img src="https://img.shields.io/badge/Python-색상코드?style=flat-square&logo=로고명&logoColor=로고색"/>
+
 # 개발 방법
----
 ### <타입> 리스트
 - feat : 기능 (새로운 기능)
 - fix : 버그 (버그 수정)
@@ -26,8 +24,8 @@
 3. 제목과 본문을 한 줄 띄워 분리한다.
 4. 본문은 “어떻게" 보다 “무엇을", “왜" 설명한다.
 5. 본문에 여러줄의 메시지를 작성할 땐 “-”로 구분한다.
+
 # 팀원
----
 |Name|정우희|김성훈|원승혁|
 |-----|-----|-----|-----|
 |role|Team Leader, Frontend|Backend|Backend|
