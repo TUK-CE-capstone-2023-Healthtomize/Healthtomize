@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for u in users %}
+<hr/>
+<h2>아이디 : {{u.member_id}}</h2>
+<h3>비밀번호 : {{u.passwd}}</h3>
+<h4>이름 : {{u.name}}</h4>
+<h5>이메일 : {{u.email}}</h5>
+{%endfor%}
+</body>
+</html>
