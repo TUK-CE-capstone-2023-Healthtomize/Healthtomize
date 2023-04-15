@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for f in foods %}
+<hr/>
+<h2>음식이름 : {{f.food_name}}</h2>
+1회 제공량 : {{f.serving_size}}g
+열량 : {{f.calories}}cal
+탄수화물 : {{f.carbon}}g
+단백직 : {{f.protein}}g
+지방 : {{f.fat}}g
+콜레스테롤 : {{f.cholesterol}}g
+{%endfor%}
+<a href="/food">[뒤로가기]</a><br>
+
+</body>
+</html>

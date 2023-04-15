@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    먹은 음식
-    <form action="result" method="post">
-        {% csrf_token %}
-        <textarea name="content1" id="content1" rows="1"></textarea>
-        <textarea name="content2" id="content2" rows="1"></textarea>
-        <textarea name="content3" id="content3" rows="1"></textarea>
-        <input type="submit" value="답변등록">
-        </form>
+<nav>
+  <a href="/">메인</a>
+</nav>
+
+<h1>안녕하세요</h1>
+<h2>음식</h2>
+    <a href="/food/food_info_input">[음식정보입력]</a><br>
+    <a href="/food/list">[음식 DB]</a><br>
+    <a href="/food/food_input">[영양분 계산]</a><br>
+<h3>아직 공사중</h3>
 </body>
 </html>

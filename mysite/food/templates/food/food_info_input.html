@@ -1,0 +1,56 @@
+{% extends "food/base.html" %}
+{% block main_area %}
+    <h1>음식 영양정보 입력</h1>
+ 
+<form name="f1" method="post">
+{% csrf_token %}
+    <table width="300" border="1" cellpadding="2" cellspacing="0">
+    <tbody>
+    <tr>
+        <td>음식 : </td>
+        <td><input type="text" name="food_name"></td>
+    </tr>
+    <tr>
+        <td>기준량 : </td>
+        <td><input type="text" name="serving_size"></td>
+    </tr>
+    <tr>
+        <td>칼로리 : </td>
+        <td><input type="text" name="calories"></td>
+    </tr>
+    <tr>
+        <td>탄수화물 : </td>
+        <td><input type="text" name="carbon"></td>
+    </tr>
+    <tr>
+        <td>단백질 : </td>
+        <td><input type="text" name="protein"></td>
+    </tr>
+    <tr>
+        <td>지방 : </td>
+        <td><input type="text" name="fat"></td>
+    </tr>
+    <tr>
+        <td>콜레스테롤 : </td>
+        <td><input type="text" name="cholesterol"></td>
+    </tr>
+    </tbody>
+    </table>
+</form>
+ 
+<br>
+<button type="button" onclick="memReg()">DB입력하기</button>
+<a href="/food">[뒤로가기]</a><br>
+
+<script>
+function memReg() {
+    var form = document.f1;
+
+    form.action = "/food/food_info_input";
+    form.submit();
+}
+</script>
+{% if message %}
+<script>alert('{{ message }}');</script>
+{% endif %}
+{% endblock %}

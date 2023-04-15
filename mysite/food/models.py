@@ -1,23 +1,17 @@
 from django.db import models
 
 # Create your models here.
-from django.db import models
 
 class food(models.Model):
-    food = models.CharField(db_column='member_id', max_length=50)
-    carbon = models.CharField(db_column='passwd', max_length=50)
-    carbon = models.CharField(db_column='passwd', max_length=50)
-    protein = models.CharField(db_column='name', max_length=50)
-    email = models.CharField(db_column='email', max_length=50, blank=True)
-    usage_flag = models.CharField(db_column='usage_flag', max_length=10, default='y')
-    reg_date = models.DateTimeField(db_column='reg_date', auto_now_add=True)
-    update_date = models.DateTimeField(db_column='update_date', auto_now_add=True)
+    food_name = models.CharField(db_column='food_name', max_length=50, default=0)
+    serving_size = models.IntegerField(db_column='serving_size', default=0)
+    calories = models.IntegerField(db_column='calories', default=0)
+    carbon = models.IntegerField(db_column='carbon', default=0)
+    protein = models.IntegerField(db_column='protein', default=0)
+    fat = models.IntegerField(db_column='fat', default=0)
+    cholesterol = models.IntegerField(db_column='cholesterol', default=0)
+
 
     class Meta:
         #        managed = False
-        db_table = 'member'
-
-    def __str__(self):
-        return '이름 : ' + self.name + ", 이메일 : " + self.email
-
-
+        db_table = 'food'
