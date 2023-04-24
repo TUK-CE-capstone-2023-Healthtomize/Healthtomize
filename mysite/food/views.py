@@ -64,8 +64,8 @@ def food_input(request):
         foods = food.objects.get(food_name=food_name)
 
         if amount is '':
-            context['list'] = food_name
-            context['amount'] = int(foods.serving_size)
+            context['list'] = str(food_name)+str(serving_size)+'g '
+            context['amount'] = int(serving_size)
             context['calories'] = int(foods.calories)
             context['carbon'] = int(foods.carbon)
             context['protein'] = int(foods.protein)
@@ -73,8 +73,8 @@ def food_input(request):
             context['cholesterol'] = int(foods.cholesterol)
 
         else:
-            context['list'] = str(list)+str(food_name)
-            context['amount'] = int(amount)+int(foods.serving_size)
+            context['list'] = str(list)+str(food_name)+str(serving_size)+'g '
+            context['amount'] = int(amount)+int(serving_size)
             context['calories'] = int(calories)+int(foods.calories)
             context['carbon'] = int(carbon)+int(foods.carbon)
             context['protein'] = int(protein)+int(foods.protein)
