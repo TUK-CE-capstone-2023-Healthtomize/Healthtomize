@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>운동/식단 피드백</h1>
+
+<form name="f1" method="post">
+{% csrf_token %}
+    <table width="300" border="1" cellpadding="2" cellspacing="0">
+    <tbody>
+    <tr>
+        <td>권장 섭취량 : </td>
+        <td><input type="text" name="recommend_calories"></td>
+    </tr>
+    <tr>
+        <td>기초 대사량 : </td>
+        <td><input type="text" name="base_calories"></td>
+    </tr>
+    <tr>
+        <td>진행한 운동량 : </td>
+        <td><input type="text" name="used_calories"></td>
+    </tr>
+        </table>
+    권장 섭취량 {{recommend_calories}}cal<br>
+    총 섭취한 칼로리 {{calories}}cal<br>
+    소모한 칼로리 {{used_calories}}cal<br>
+    부족한 칼로리 {{feedback}}cal<br>
+
+    <input type="hidden" name="calories" value = "{{calories}}">
+
+
+
+
+
+</form>
+
+<br>
+<button type="button" onclick="memReg()">칼로리 정보 입력</button><br>
+<a href="/food">[뒤로가기]</a><br>
+
+<script>
+function memReg() {
+    var form = document.f1;
+
+    form.action = "/food/feedback";
+    form.submit();
+}
+
+</script>
+{% if message %}
+<script>alert('{{ message }}');</script>
+{% endif %}
+
+</body>
+</html>

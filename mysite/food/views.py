@@ -62,26 +62,51 @@ def food_input(request):
         fat = request.POST.get('fat')
         cholesterol = request.POST.get('cholesterol')
         foods = food.objects.get(food_name=food_name)
+        rate = int(serving_size)/int(foods.serving_size)
 
         if amount is '':
             context['list'] = str(food_name)+str(serving_size)+'g '
             context['amount'] = int(serving_size)
-            context['calories'] = int(foods.calories)
-            context['carbon'] = int(foods.carbon)
-            context['protein'] = int(foods.protein)
-            context['fat'] = int(foods.fat)
-            context['cholesterol'] = int(foods.cholesterol)
+            context['calories'] = round(int(foods.calories)*rate,2)
+            context['carbon'] = round(int(foods.carbon)*rate,2)
+            context['protein'] = round(int(foods.protein)*rate,2)
+            context['fat'] = round(int(foods.fat)*rate,2)
+            context['cholesterol'] = round(int(foods.cholesterol)*rate,2)
 
         else:
             context['list'] = str(list)+str(food_name)+str(serving_size)+'g '
             context['amount'] = int(amount)+int(serving_size)
-            context['calories'] = int(calories)+int(foods.calories)
-            context['carbon'] = int(carbon)+int(foods.carbon)
-            context['protein'] = int(protein)+int(foods.protein)
-            context['fat'] = int(fat)+int(foods.fat)
-            context['cholesterol'] = int(cholesterol)+int(foods.cholesterol)
+            context['calories'] = round(float(calories)+int(foods.calories)*rate,2)
+            context['carbon'] = round(float(carbon)+int(foods.carbon)*rate,2)
+            context['protein'] = round(float(protein)+int(foods.protein)*rate,2)
+            context['fat'] = round(float(fat)+int(foods.fat)*rate,2)
+            context['cholesterol'] = round(float(cholesterol)+int(foods.cholesterol)*rate,2)
 
 
 
         return render(request, 'food/food_input.html',context)
         # if rs.exists():
+
+def feedback(request):
+    if request.method == "GET":
+        return render(request, 'food/feedback.html')
+
+    elif request.method == "POST":
+        context = {}
+
+        recommend_calories = request.POST.get('recommend_calories')
+        used_calories = request.POST.get('used_calories')
+        calories = request.POST.get('calories')
+        base_calories = request.POST.get('base_calories')
+
+
+
+        context['calories'] = calories
+
+
+        context['feedback'] = ' '
+        if used_calories is not None:
+            context['feedback'] = round(float(recommend_calories)-float(used_calories)+float(calories)-float(base_calories),2)
+            context['used_calories'] = int(used_calories) + int(base_calories)
+            context['recommend_calories'] = recommend_calories
+        return render(request, 'food/feedback.html',context)
