@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 class food(models.Model):
@@ -15,3 +14,4 @@ class food(models.Model):
     class Meta:
         #        managed = False
         db_table = 'food'
+

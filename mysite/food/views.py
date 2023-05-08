@@ -1,5 +1,7 @@
 from django.shortcuts import render
+
 from .models import food
+from user_test.models import Member
 # Create your views here.
 def index(request):
 
@@ -18,7 +20,6 @@ def food_info_input(request):
         fat = request.POST["fat"]
         cholesterol = request.POST["cholesterol"]
 
-        # 회원가입 중복체크
         rs = food.objects.filter(food_name=food_name)
         if rs.exists():
             context['message'] = food_name + "가 중복됩니다."
@@ -94,11 +95,9 @@ def feedback(request):
     elif request.method == "POST":
         context = {}
 
-        recommend_calories = request.POST.get('recommend_calories')
         used_calories = request.POST.get('used_calories')
         calories = request.POST.get('calories')
-        base_calories = request.POST.get('base_calories')
-
+        id=request.POST.get('id')
 
 
         context['calories'] = calories
@@ -106,7 +105,25 @@ def feedback(request):
 
         context['feedback'] = ' '
         if used_calories is not None:
-            context['feedback'] = round(float(recommend_calories)-float(used_calories)+float(calories)-float(base_calories),2)
-            context['used_calories'] = int(used_calories) + int(base_calories)
-            context['recommend_calories'] = recommend_calories
+            members = Member.objects.get(member_id=id)
+            if members.gender=='남자':
+                base_calories= 66+13.7*int(members.weight)+(5*int(members.height))-(6.5*int(members.age))
+                context['base_calories'] = base_calories
+
+            else:
+                base_calories=665 + 9.6 * int(members.weight) + (1.8 * int(members.height)) - (4.7 * int(members.age))
+                context['base_calories'] = base_calories
+
+            context['used_calories'] = used_calories
+            if float(base_calories)+float(used_calories)>float(calories):
+                less_calories=round(float(base_calories)+float(used_calories)-float(calories),2)
+                potato_ea=round(less_calories/130,1)
+                context['feedback'] = '부족한 칼로리는'+str(less_calories) +'입니다'
+                context['feedback1']='감자'+str(potato_ea)+'개로 영양분을 보충하세요'
+            else:
+                much_calories=float(calories)-float(base_calories) - float(used_calories)
+                squat_1ea=round(much_calories/0.7)
+                context['feedback'] = '과다한 칼로리는' + str(much_calories) + 'cal입니다.'
+                context['feedback1'] = '스쿼트'+str(squat_1ea)+'회로 칼로리를 소모할수 잇습니다.'
+
         return render(request, 'food/feedback.html',context)

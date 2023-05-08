@@ -12,23 +12,19 @@
     <table width="300" border="1" cellpadding="2" cellspacing="0">
     <tbody>
     <tr>
-        <td>권장 섭취량 : </td>
-        <td><input type="text" name="recommend_calories"></td>
-    </tr>
-    <tr>
-        <td>기초 대사량 : </td>
-        <td><input type="text" name="base_calories"></td>
+        <td>아이디 : </td>
+        <td><input type="text" name="id"></td>
     </tr>
     <tr>
         <td>진행한 운동량 : </td>
         <td><input type="text" name="used_calories"></td>
     </tr>
         </table>
-    권장 섭취량 {{recommend_calories}}cal<br>
     총 섭취한 칼로리 {{calories}}cal<br>
-    소모한 칼로리 {{used_calories}}cal<br>
-    부족한 칼로리 {{feedback}}cal<br>
-
+    기초 대사량 {{base_calories}}cal<br>
+    소모한 칼로리 {{used_calories}}cal<br><br>
+    {{feedback}}<br>
+    {{feedback1}}<br>
     <input type="hidden" name="calories" value = "{{calories}}">
 
 
