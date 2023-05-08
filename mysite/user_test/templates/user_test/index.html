@@ -1,6 +1,10 @@
-{% extends "user_test/base.html" %}
-{% block main_area %}
-    index.html 입니다.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
 <br>
  
 {% if not 'm_id' in request.session %}
@@ -17,4 +21,6 @@
 {% if message %}
 <script>alert('{{ message }}');</script>
 {% endif %}
-{% endblock %}
+</body>
+</html>
+

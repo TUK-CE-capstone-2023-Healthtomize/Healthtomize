@@ -29,6 +29,14 @@ def member_reg(request):
         passwd = request.POST["passwd"]
         name = request.POST["name"]
         email = request.POST["email"]
+        height = request.POST["height"]
+        weight = request.POST["weight"]
+        gender = request.POST["gender"]
+        purpose = request.POST["purpose"]
+        age = request.POST["age"]
+
+
+
 
         # 회원가입 중복체크
         rs = Member.objects.filter(member_id=member_id)
@@ -38,8 +46,8 @@ def member_reg(request):
 
         else:
             Member.objects.create(
-                member_id=member_id, passwd=passwd, name=name, email=email, usage_flag='y',
-                reg_date=datetime.now(), update_date=datetime.now())
+                member_id=member_id, passwd=passwd, name=name, email=email, height=height,
+                weight=weight, gender=gender, purpose=purpose, age=age)
             context['message'] = name + "님 회원가입 되었습니다."
             return render(request, 'user_test/index.html', context)
 

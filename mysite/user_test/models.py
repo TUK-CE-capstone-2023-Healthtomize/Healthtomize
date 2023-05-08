@@ -6,13 +6,13 @@ class Member(models.Model):
     passwd = models.CharField(db_column='passwd', max_length=50)
     name = models.CharField(db_column='name', max_length=50)
     email = models.CharField(db_column='email', max_length=50, blank=True)
-    usage_flag = models.CharField(db_column='usage_flag', max_length=10, default='y')
-    reg_date = models.DateTimeField(db_column='reg_date', auto_now_add=True)
-    update_date = models.DateTimeField(db_column='update_date', auto_now_add=True)
+    height = models.IntegerField(db_column='height', default=0)
+    weight = models.IntegerField(db_column='weight', default=0)
+    gender = models.CharField(db_column='gender', max_length=50, default=0)
+    purpose = models.CharField(db_column='purpose', max_length=50, default=0)
+    age = models.IntegerField(db_column='age', default=0)
+
 
     class Meta:
         #        managed = False
         db_table = 'member'
-
-    def __str__(self):
-        return '이름 : ' + self.name + ", 이메일 : " + self.email
