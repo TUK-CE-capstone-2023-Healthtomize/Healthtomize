@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<center>
     <h1>음식 영양정보 입력</h1>
  
 <form name="f1" method="post">
@@ -13,7 +14,14 @@
     <tbody>
     <tr>
         <td>먹은 음식 : </td>
-        <td><input type="text" name="food_name"></td>
+        <td><input type="text" name="food_name" list="foods">
+        <dataList id ="foods">
+            {% for food_name in foods%}
+            <option value="{{food_name.food_name}}"></option>
+            {%endfor%}
+        </dataList>
+
+        </td>
     </tr>
     <tr>
         <td>음식 양 : </td>
@@ -53,12 +61,13 @@ function memReg() {
 function memReg1() {
     var form = document.f1;
 
-    form.action = "/food/feedback";
+    form.action = "/food/feedbackw";
     form.submit();
 }
 </script>
 {% if message %}
 <script>alert('{{ message }}');</script>
 {% endif %}
+</center>
 </body>
 </html>

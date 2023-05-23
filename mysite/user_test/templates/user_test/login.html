@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<center>
 로그인 페이지입니다.
 <br>
  
@@ -15,7 +16,7 @@
  
 <br><br>
 <input type="button" value="로그인" onclick="loginChk()">
-<input type="button" value="회원가입" onclick="location.href='/user_test/register/'">
+<input type="button" value="회원가입" onclick="location.href='/user/register'">
 </form>
  
 <script>
@@ -39,6 +40,7 @@ function loginChk() {
 {% if message %}
 <script>alert('{{ message }}');</script>
 {% endif %}
+</center>
 </body>
 </html>
 

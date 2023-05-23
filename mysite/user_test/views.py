@@ -6,8 +6,13 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from django.http import HttpResponse, JsonResponse
 from .models import Member
-
-
+from rest_framework import viewsets
+from .serializers import userSerializer
+from django.http import HttpRequest
+import json
+request = HttpRequest()
+request.method = 'POST'
+request.content_type = 'application/json'
 def index(request):
     context = {}
     # context['m_id'] = request.session['m_id']
@@ -87,7 +92,7 @@ def member_login(request):
 
 def member_logout(request):
     request.session.flush()
-    return redirect('/user_test')
+    return redirect('/user')
 
 def user_list(request):
     users = Member.objects.all().order_by('pk')
@@ -99,3 +104,53 @@ def user_list(request):
             'users': users,
         }
     )
+
+class userViewset(viewsets.ModelViewSet):
+    queryset = Member.objects.all()
+    serializer_class = userSerializer
+    data=serializer_class.data
+
+
+@csrf_exempt
+def userfind(request):
+    if request.method == 'POST':
+        # JSON 데이터를 가져옴
+        json_data = request.body.decode('utf-8')
+
+        try:
+            # JSON 데이터를 파싱하여 필요한 처리 수행
+            data = json.loads(json_data)
+            id=data['id']
+            members = Member.objects.get(member_id=id)
+
+            name=members.name
+            email=members.email
+            height=members.height
+            weight=members.weight
+            gender=members.gender
+            purpose=members.purpose
+            age = members.age
+            # 처리 결과를 JSON 응답으로 반환
+            response_data = {
+                'message': 'POST 요청이 성공적으로 처리되었습니다.',
+                '이름': name,
+                '이메일' : email,
+                '키': height,
+                '몸무게': weight,
+                '성별':gender,
+                '목적':purpose,
+                '나이':age
+            }
+            return JsonResponse(response_data)
+        except json.JSONDecodeError:
+            # JSON 데이터 파싱에 실패한 경우
+            response_data = {
+                'message': '잘못된 JSON 형식입니다.',
+            }
+            return JsonResponse(response_data, status=400)
+    else:
+        # POST 요청이 아닌 경우
+        response_data = {
+            'message': 'POST 요청이 아닙니다.',
+        }
+        return JsonResponse(response_data, status=405)

@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<center>
     <h1>회원가입폼</h1>
  
 <form name="f1" method="post">
@@ -77,13 +78,14 @@ function memReg() {
         form.name.focus();
         return;
     }
-    form.action = "/user_test/register";
+    form.action = "/user/register";
     form.submit();
 }
 </script>
 {% if message %}
 <script>alert('{{ message }}');</script>
 {% endif %}
+</center>
 </body>
 </html>
 

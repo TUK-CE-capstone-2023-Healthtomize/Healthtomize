@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<center>
 <h1>운동/식단 피드백</h1>
 
 <form name="f1" method="post">
@@ -22,7 +23,8 @@
         </table>
     총 섭취한 칼로리 {{calories}}cal<br>
     기초 대사량 {{base_calories}}cal<br>
-    소모한 칼로리 {{used_calories}}cal<br><br>
+    소모한 칼로리 {{used_calories}}cal<br>
+    <br>
     {{feedback}}<br>
     {{feedback1}}<br>
     <input type="hidden" name="calories" value = "{{calories}}">
@@ -41,7 +43,7 @@
 function memReg() {
     var form = document.f1;
 
-    form.action = "/food/feedback";
+    form.action = "/food/feedbackw";
     form.submit();
 }
 
@@ -49,6 +51,6 @@ function memReg() {
 {% if message %}
 <script>alert('{{ message }}');</script>
 {% endif %}
-
+</center>
 </body>
 </html>

@@ -5,22 +5,25 @@
     <title>Title</title>
 </head>
 <body>
+<center>
 <br>
  
 {% if not 'm_id' in request.session %}
-    <a href="/user_test/register">[회원가입]</a><br>
-    <a href="/user_test/login">[로그인]</a><br>
-    <a href="/user_test/list">[회원정보]</a><br>
+    <a href="/user/register">[회원가입]</a><br>
+    <a href="/user/login">[로그인]</a><br>
+    <a href="/user/list">[회원정보]</a><br>
+    <a href="/user/api">[api]</a><br>
     <a href="/">홈으로</a>
 {% else %}
     {{ m_name }} 님 어서오세요.
     <br><br>
-    <a href="/user_test/logout">[로그아웃]</a>
+    <a href="/user/logout">[로그아웃]</a>
 {% endif %}
  
 {% if message %}
 <script>alert('{{ message }}');</script>
 {% endif %}
+</center>
 </body>
 </html>
 
