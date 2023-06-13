@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>운동 결과 분석</title>
+  </head>
+  <body>
+    <h2>스쿼트 완료</h2>
+    <div id="container"></div>
+    <script type="text/javascript">
+      for (let i = 0; i < 5; i++) {
+        // 총 수행 횟수, 인정 횟수, 완벽한 성공, 성공률, 코멘트, 실패횟수
+        container.appendChild(document.createElement("div"));
+      }
+      var count = localStorage.getItem("count");
+      var perfect = localStorage.getItem("perfect");
+      var wrong = localStorage.getItem("wrong");
+      var rate = (count + perfect) / 10;
+      container.childNodes[0].innerHTML = "총 수행 횟수 : 10회(데모 버전 고정)";
+      container.childNodes[1].innerHTML = "인정 횟수 : " + count + "회";
+      container.childNodes[2].innerHTML = "실패 횟수 : " + wrong + "회";
+      container.childNodes[3].innerHTML = "완벽한 성공 : " + perfect + "회";
+      container.childNodes[4].innerHTML =
+        "운동이 종료 되었습니다. 더 나은 자세를 원하시면 영상을 참고해보세요.";
+
+      container.appendChild(document.createElement("iframe"));
+      container.childNodes[5].width = "560";
+      container.childNodes[5].height = "315";
+      container.childNodes[5].src = "https://www.youtube.com/embed/Fk9j6pQ6ej8";
+      container.childNodes[5].controls = "1";
+    </script>
+  </body>
+</html>
