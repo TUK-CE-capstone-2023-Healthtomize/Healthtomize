@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스쿼트 운동 지도</title>
+  </head>
+  <body>
+    <div>스쿼트 운동 지도를 시작합니다.</div>
+    <div>카메라를 왼쪽에 배치하세요.</div>
+    <button type="button" onclick="init()">시작</button>
+    <div><canvas id="canvas"></canvas></div>
+    <div id="label-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+    <script type="text/javascript">
+      // More API functions here:
+      // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/pose
+
+      // the link to your model provided by Teachable Machine export panel
+      const URL = "my_squatmodel/"; //학습한 모델 폴더 주소
+      let model, webcam, ctx, labelContainer, maxPredictions;
+
+      // label-container가 고치고 싶은 것임. 여기에 클래스 인식 값이 나오는데 이걸 state 변수 출력으로 변경하며 성공 횟수와 총 시도 횟수를 출력하려 함
+      // css 파일은 임의로 만들 예정, 자세한 모델의 경우 코드가 모두 같은 형태이기에 css 파일은 하나의 파일을 공유하여 사용하면 될듯
+
+      async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        // load the model and metadata
+        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+        // Note: the pose library adds a tmPose object to your window (window.tmPose)
+        model = await tmPose.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        // Convenience function to setup a webcam
+        //웹카메라 출력
+        const size = 400;
+        const flip = true; // whether to flip the webcam 이 기능 true 해야 거울처럼 나옴
+        webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
+        await webcam.setup(); // request access to the webcam
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        // append/get elements to the DOM
+        const canvas = document.getElementById("canvas");
+        canvas.width = size;
+        canvas.height = size;
+        ctx = canvas.getContext("2d");
+        labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < 6; i++) {
+          // 현재 상태, 총 시도해야 할 횟수, 총 시도 횟수, 인정 횟수, 완벽한 성공, 실패 횟수
+          // and class labels
+          labelContainer.appendChild(document.createElement("div"));
+        }
+      }
+
+      async function loop(timestamp) {
+        webcam.update(); // update the webcam frame
+        await predict();
+        window.requestAnimationFrame(loop);
+      }
+
+      var status = "stand"; //동작의 옳고 그름 판단 위한 상태 변수
+      var count = 0; //옳은 동작
+      var perfect = 0; //완벽한 동작
+      var wrong = 0; //틀린 동작
+      var total = 0; //총 수행 횟수 - 데모는 10회 고정, 이후 사용자로부터 전달받은 수행 횟수와 비교
+
+      async function predict() {
+        // Prediction #1: run input through posenet
+        // estimatePose can take in an image, video or canvas html element
+        const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
+        // Prediction 2: run input through teachable machine classification model
+        const prediction = await model.predict(posenetOutput);
+
+        //운동 실행 - 개수 세기
+        if (prediction[0].probability.toFixed(2) == 1.0) {
+          if (status == "squat") {
+            var audio = new Audio("perfect.mp3");
+            audio.play();
+            perfect++;
+            total++;
+          } else if (status == "error") {
+            var audio = new Audio("error.mp3");
+            audio.play();
+            wrong++;
+            total++;
+          } else if (status == "normal") {
+            var audio = new Audio("correct.mp3");
+            audio.play();
+            count++;
+            total++;
+          }
+          status = "stand";
+        } else if (prediction[1].probability.toFixed(2) == 1.0) {
+          if (status == "ready") {
+            status = "stand";
+          } else {
+            status = "squat";
+          }
+        } else if (prediction[2].probability.toFixed(2) == 1.0) {
+          if (status == "error") {
+            status = "error";
+          } else if (status == "squat") {
+            status = "squat";
+          } else if (status == "normal") {
+            status = "normal";
+          } else {
+            status = "ready";
+          }
+        } else if (prediction[3].probability.toFixed(2) == 1.0) {
+          if (status == "squat") {
+            status = "squat";
+          } else if (status == "error") {
+            status = "error";
+          } else {
+            status = "normal";
+          }
+        } else if (prediction[4].probability.toFixed(2) == 1.0) {
+          status = "error";
+        }
+
+        // 이 반복문이 label-container에 클래스 인식 값을 전송하고 있는 것임. 이 코드를 바꿔야함
+        labelContainer.childNodes[0].innerHTML = "현재 상태 : " + status;
+        labelContainer.childNodes[1].innerHTML = "목표 횟수 : 10"; // 사용자로부터 목표 개수 입력 받으면 그 값이 들어갈 예정
+        labelContainer.childNodes[2].innerHTML = "총 시도 횟수 : " + total;
+        labelContainer.childNodes[3].innerHTML = "인정 횟수 : " + count;
+        labelContainer.childNodes[4].innerHTML = "실패 횟수 : " + wrong;
+        labelContainer.childNodes[5].innerHTML = "완벽한 성공 : " + perfect;
+
+        if (total == 10) {
+          localStorage.setItem("perfect", perfect);
+          localStorage.setItem("count", count);
+          localStorage.setItem("wrong", wrong);
+          location.href = "/squat";
+        }
+
+        // finally draw the poses
+        drawPose(pose);
+      }
+
+      function drawPose(pose) {
+        if (webcam.canvas) {
+          ctx.drawImage(webcam.canvas, 0, 0);
+          // draw the keypoints and skeleton
+          if (pose) {
+            const minPartConfidence = 0.5;
+            tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+            tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

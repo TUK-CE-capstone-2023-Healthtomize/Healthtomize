@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>운동 지도 서비스</title>
+  </head>
+  <body>
+    <h1>Health-tomize</h1>
+    <h2>운동 지도 서비스</h2>
+    <h3>안 내 사 항</h3>
+    <div>데모 버전은 운동 수행 횟수 10회, 수행 운동은 스쿼트로 고정됩니다.</div>
+    <div>자세는 1.5초 이상 유지하시기 바랍니다.</div>
+    <!--
+    <select id="select-option" onchange="goToPage(this.value)">
+      <option value="squat.html">스쿼트</option>
+      <option value="situp.html">윗몸일으키기</option>
+      <option value="pushup.html">팔굽혀펴기</option>
+    </select>
+    <button id="go-button" type="button" onclick="goToPage()">확인</button>
+    <script>
+      function updateLink() {
+        var select = document.getElementById("select-option");
+        var selectedValue = select.options[select.selectedIndex].value;
+        var link = document.getElementById("go-button");
+        link.setAttribute("data-link", selectedValue);
+      }
+
+      function goToPage() {
+        var link = document.getElementById("go-button");
+        var selectedValue = link.getAttribute("data-link");
+        if (selectedValue) {
+          window.location.href = selectedValue;
+        }
+      }
+    </script>-->
+
+    <input
+      type="button"
+      value="안내 사항을 숙지했습니다."
+      onclick="squat()"
+    />
+    <!--<input
+      type="button"
+      value="윗몸일으키기"
+      onclick="location.href='situp.html'"
+    />
+    <input
+      type="button"
+      value="팔굽혀펴기"
+      onclick="location.href='pushup.html'"
+    />-->
+  </body>
+</html>

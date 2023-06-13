@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'single_pages',
     'user_test',
     'rest_framework',
+    'ai',
 ]
 
 MIDDLEWARE = [

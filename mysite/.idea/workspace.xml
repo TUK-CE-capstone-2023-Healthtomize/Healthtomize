@@ -31,12 +31,14 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/37593/cdrive",
+    "last_opened_file_path": "C:/Users/37593/mysite/ai",
     "settings.editor.selected.configurable": "terminal"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\37593\mysite\ai" />
+      <recent name="C:\Users\37593\mysite\ai\templates\ai" />
       <recent name="C:\Users\37593\mysite\blog\templates\blog" />
       <recent name="C:\Users\37593\mysite\main\templates\main" />
     </key>
